@@ -1,5 +1,5 @@
 require "heroku_ci/version"
+require "heroku_ci/engine"
 
 module HerokuCi
-  # Your code goes here...
 end

@@ -21,4 +21,9 @@ Gem::Specification.new do |s|
   # specify any dependencies here; for example:
   # s.add_development_dependency "rspec"
   # s.add_runtime_dependency "rest-client"
+  s.add_dependency 'rails', '~> 3.1'
+  s.add_dependency 'jquery-rails', '>= 1.0'
+  s.add_dependency 'bootstrap-sass', ['~> 1.4', '>= 1.4.1']
+  s.add_dependency 'haml', '~> 3.1.4'
+  s.add_dependency 'devise', '~> 2.0.0'
 end
