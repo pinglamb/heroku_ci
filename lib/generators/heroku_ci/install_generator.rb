@@ -8,7 +8,8 @@ module HerokuCi
     desc "HerokuCi installation generator"
 
     def install
-      migration_template 'migration_devise_create_users.rb', 'db/migrate/devise_create_users'
+      safe_migration_template 'migration_devise_create_users.rb', 'db/migrate/devise_create_users'
+      safe_migration_template 'migration_create_projects.rb', 'db/migrate/create_projects'
     end
 
     def self.next_migration_number(dirname)
@@ -25,6 +26,10 @@ module HerokuCi
 
     def display(output, color = :green)
       say("           -  #{output}", color)
+    end
+
+    def safe_migration_template(*args, &block)
+      migration_template(*args, &block) rescue display $!.message
     end
   end
 end
