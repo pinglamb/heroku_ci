@@ -2,7 +2,7 @@ module HerokuCi
   class SSHUtils
     class << self
       def add_key(name, key)
-        filename = "#{ssh_root}/#{name}"
+        filename = "#{ssh_root}/#{name}.pem"
         File.open(filename, "w") do |f|
           f.write(key)
         end
