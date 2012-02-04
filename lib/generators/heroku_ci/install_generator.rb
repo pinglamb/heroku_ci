@@ -10,6 +10,8 @@ module HerokuCi
     def install
       safe_migration_template 'migration_devise_create_users.rb', 'db/migrate/devise_create_users'
       safe_migration_template 'migration_create_projects.rb', 'db/migrate/create_projects'
+      safe_migration_template 'migration_create_builds.rb', 'db/migrate/create_builds'
+      template 'database.yml', 'vendor/database.yml'
     end
 
     def self.next_migration_number(dirname)
