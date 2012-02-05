@@ -5,7 +5,7 @@ class Build < ActiveRecord::Base
   belongs_to :project
 
   delegate :host, :ssh_key, :repository, :to => :project
-  delegate :name, :to => :project, :prefix => true
+  delegate :name, :directory, :to => :project, :prefix => true
 
   def checkout
     filename = HerokuCi::SSHUtils.add_key('deploy', self.ssh_key)
@@ -36,11 +36,5 @@ class Build < ActiveRecord::Base
     system "cd #{project_directory} && RAILS_ENV=development rake db:create"
     system "cd #{project_directory} && RAILS_ENV=development rake db:migrate"
     system "cd #{project_directory} && RAILS_ENV=development rake db:test:prepare && RAILS_ENV=test rake test"
-  end
-
-  private
-
-  def project_directory
-    File.join(Rails.root, 'tmp', self.project_name)
   end
 end

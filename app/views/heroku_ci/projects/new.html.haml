@@ -1,0 +1,25 @@
+%ul.breadcrumb
+  %li
+    =link_to 'Projects', heroku_ci.projects_path
+    %span.divider /
+  %li.active= link_to 'New', heroku_ci.new_project_path
+
+%ul.tabs
+  %li= link_to "Projects (#{Project.count})", heroku_ci.projects_path
+  %li.active= link_to "New Project", heroku_ci.new_project_path
+
+= form_for(@project, :url => heroku_ci.projects_path, html: {:class => 'form'}) do |f|
+  .clearfix.field{class: f.object.errors[:name].present? ? 'error' : ''}
+    = f.label :name
+    .input
+      = f.text_field :name, class: 'span5'
+      %span.help-inline= f.object.errors.get(:name).first
+      %span.help-block Required. Used as the project directory name
+  .clearfix.field{class: f.object.errors[:repository].present? ? 'error' : ''}
+    = f.label :repository
+    .input
+      = f.text_field :repository, class: 'span5'
+      %span.help-inline= f.object.errors.get(:repository).first
+      %span.help-block Required. Git repository
+  .actions
+    = f.submit 'Create', class: 'btn primary'

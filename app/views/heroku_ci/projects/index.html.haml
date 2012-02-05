@@ -4,6 +4,10 @@
   %li.active
     =link_to 'Projects', heroku_ci.projects_path
 
+%ul.tabs
+  %li.active= link_to "Projects (#{Project.count})", heroku_ci.projects_path
+  %li= link_to "New Project", heroku_ci.new_project_path
+
 %table.zebra-striped.bordered-table
   %thead
     %tr
