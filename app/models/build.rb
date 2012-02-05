@@ -9,9 +9,11 @@ class Build < ActiveRecord::Base
 
   def checkout
     filename = HerokuCi::SSHUtils.add_key('deploy', self.ssh_key)
-    HerokuCi::SSHUtils.config_host(self.host, "IdentityFile" => filename)
+    HerokuCi::SSHUtils.config_host(self.host, "IdentityFile" => filename, 'StrictHostKeyChecking' => 'no')
     FileUtils.rm_rf project_directory
-    system "cd #{File.join(Rails.root, 'tmp')} && git clone #{self.repository} #{self.project_name}"
+    tmpdir = File.join(Rails.root, 'tmp')
+    FileUtils.mkdir_p tmpdir
+    system "cd #{tmpdir} && git clone #{self.repository} #{self.project_name}"
   end
 
   def bundle
