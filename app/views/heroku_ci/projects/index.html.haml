@@ -1,0 +1,19 @@
+- content_for :page_header, 'Projects'
+
+%ul.breadcrumb
+  %li.active
+    =link_to 'Projects', heroku_ci.projects_path
+
+%table.zebra-striped.bordered-table
+  %thead
+    %tr
+      %th Name
+      %th Repository
+  %tbody
+    - @projects.each do |project|
+      %tr.link{data: {link: heroku_ci.project_path(project)}}
+        %td= project.name
+        %td= project.repository
+    - if @projects.empty?
+      %tr
+        %td{colspan: 2, style: 'text-align:center'} You have no projects

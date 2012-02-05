@@ -1,0 +1,36 @@
+!!! 5
+%html
+  %head
+    %title HerokuCI
+    = stylesheet_link_tag "heroku_ci/heroku_ci.css"
+    = javascript_include_tag "heroku_ci/heroku_ci.js"
+    = csrf_meta_tag
+  %body
+    .topbar
+      .fill
+        .container
+          %a.brand{:href => "/"} HerokuCI
+          %ul.nav
+            - if current_user
+              %li= link_to "Projects", heroku_ci.projects_path
+              %li= link_to "Settings", edit_registration_path(current_user)
+              %li= link_to current_user.email, edit_registration_path(current_user)
+              %li= link_to content_tag('span', 'Logout', :class => 'label important'), heroku_ci.destroy_user_session_path, :method => Devise.sign_out_via
+              %li= image_tag "#{(request.ssl? ? 'https://secure' : 'http://www')}.gravatar.com/avatar/#{Digest::MD5.hexdigest current_user.email}?s=30", :style => 'padding-top:5px'
+            - else
+              %li= link_to 'Login', new_user_session_path
+              %li= link_to 'Sign Up', new_user_registration_path
+    .container
+      .content
+        - if content_for?(:page_header)
+          .page-header
+            %h1= yield :page_header
+        - flash && flash.each do |key, value|
+          .alert-message.fade.in{:class => key}
+            %a.close{:href => '#'}×
+            %p= value
+        .row
+          .span14
+            = yield
+      %footer
+        %p &copy; HerokuCI 2012
